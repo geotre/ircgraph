@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <style>
+      body, html {
+        background-color: #222;
+        font-family: 'Iosevka';
+        color: #fafafa;
+        padding: 20px;
+      }
+
+      h1 {
+        margin-bottom: 0;
+      }
+
+      h2 {
+        color: #777;
+        font-size: 0.9em;
+        line-height: 1em;
+      }
+
+      .year {
+        margin-bottom: 5em;
+      }
+
+      .graphbody {
+        height: 100px;
+        width: 100%;
+      }
+
+      .lineholder {
+        width: 1px;
+        height: 100px;
+        background-color: #333;
+        float: left;
+        position: relative;
+      }
+
+      .line {
+        width: 1px;
+        background-color: #fa0;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+
+      .label {
+        position: absolute;
+        bottom: -30px;
+        left: 0px;
+        transform: rotate(30deg);
+        font-size: 0.9em;
+        color: #aaa;
+      }
+    </style>
+  </head>
+
+  <body>
+    {% for yearData in years %}
+      <div class="year">
+        <h1>{{yearData.year}}</h1>
+        <h2>{{int(yearData.totalMessages / 1000)}}K total messages</h2>
+
+        <div class="graphbody">
+          {% for (t, v) in yearData.values %}
+            <div class="lineholder" title="{{t}}">
+              <div class="line" style="height: {{v}}px"></div>
+
+              {% if t.endsWith("00") %}
+                <div class="label">{{t}}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </body>
+</html>
